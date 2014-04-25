@@ -1,0 +1,72 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Velocity Fighter Pilot Test</title>
+    <link type="text/css" rel="stylesheet" href="fp.css" media="screen">
+    <link href="http://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<div class='HUV'>
+		<div class='HUVtop'>
+			<div class='teamStats'>
+				<div class='statsContain'>
+					<div class='left' id='enemies'>5</div>
+					<div class='left'>enemies spotted</div>
+				</div>
+			</div>
+			<div class='commands'>
+				<div class='commandsContain'>
+					<span class='red'>Red Leader</span>: Help! I'm under attack!</br>
+					<span class='green'>Slippy</span>: Fox, do something!
+				</div>
+			</div>
+			<div class='artillery'>
+				<div class='artilleryContain'>
+					Artillery
+				</div>
+			</div>
+		</div>
+		<div class='HUVmid'>
+			<div class='aimCircle'>
+
+			</div>
+		</div>
+		<div class='HUVbottom'>
+			<div class='radar'>
+				<div class='rship good'></div>
+				<div class='rship bad'></div>
+
+				<div class='innerCircle'>
+
+				</div>
+			</div>
+			<div class='targetDistance'>
+				Target distance: 1524m</br>
+				Current speed: 0.462km/s
+			</div>
+			<div class='shipStats'>
+				<div class='left'>
+					<img class='shipDia' src='ship.png'/>
+				</div>
+				<div class='left'>
+					Fuel
+					<ul class='fuel'>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id='stars'></div>
+
+	<div id='description'>A demo of the capabilities of velocity.js</div>
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="jquery.velocity.min.js" id="library"></script>
+	<script src="fp.js"></script>
+</body>
+</html>

@@ -1,0 +1,305 @@
+html, body { height:100%; margin:0; padding:0; }
+body {
+	background-color:rgb(5, 10, 11);
+	overflow: hidden;
+}
+* { 
+	font-family:"Orbitron"; 
+	-webkit-box-sizing:border-box; 
+	-moz-box-sizing:border-box; 
+	box-sizing:border-box;
+}
+a {
+	color: #4bc2f1;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+#description {
+	position: fixed;
+	width: 22rem;
+	left: 50%;
+	top: 45%;
+	margin-top: -1rem;
+	margin-left: -11rem;
+			
+	font-weight: 200;
+	color: #fff;
+	opacity: 0.65;
+	text-align: center;
+	font-size: 0.775rem;
+	line-height: 1.05rem;
+	letter-spacing: 0.135em;
+	word-spacing: -0.075rem;
+}
+#stars {
+	perspective: 50px;
+	-webkit-perspective: 50px;
+	-moz-perspective: 50px;
+	-ms-perspective: 50px;
+
+	transform-origin: 50% 100%;
+	-webkit-transform-origin: 50% 100%;
+	-moz-transform-origin: 50% 100%;
+	-ms-transform-origin: 50% 100%;
+
+	position:absolute;
+	top:0;
+	left:0;
+	pointer-events: none;
+	width:100%;
+	height:100%;
+	opacity: 0.55;
+}
+.star {
+	position: fixed;
+	width: 15px;
+	height: 15px;
+	opacity:1;
+
+	border-radius: 15px;
+	background-color: #ffffff;
+}
+.left { float:left; }
+
+.HUV {
+	width:100%;
+	height:100%;
+}
+.HUV > div { position:fixed; }
+.HUVtop > div, .HUVbottom > div  { position:absolute; padding:15px; }
+
+.HUVtop {
+	top:0;
+	width:100%;
+	height:120px;
+}
+.teamStats {
+	z-index:1;
+	width:200px;
+	height:100%;
+	background:rgba(181,218,255,.7);
+	-webkit-transform-origin:left center;
+	transform-origin:left center;
+	-webkit-transform:perspective(500px) rotateY(10deg) skewY(-4deg);
+	transform:perspective(500px) rotateY(10deg) skewY(-4deg);
+	border-bottom:2px solid rgb(181,218,255);
+}
+.statsContain {
+	-webkit-transform-origin:left center;
+	transform-origin:left center;
+	-webkit-transform:perspective(500px) skewY(4deg);
+	transform:perspective(500px) skewY(4deg);
+}
+#enemies { font-size:45px; }
+.teamStats:before {
+	border-bottom: 74px transparent solid;
+	border-left: 70px rgba(181,218,255,.7) solid;
+	border-top: 46px transparent solid;
+	content: '';
+	height: 0;
+	right: -70px;
+	position: absolute;
+	top: 0;
+	width: 0;
+}
+.commands {
+	width:calc(100% - 550px);
+	height:65%;
+	left:50%;
+	text-align:center;
+	-webkit-transform:translateX(-50%);
+	transform:translateX(-50%);
+	background:rgba(181,218,255,.7);
+	border-bottom:2px solid rgb(181,218,255);
+}
+.commandsContain {
+	width:100%;
+	height:100%;
+	max-width:800px;
+	margin:0 auto;
+}
+.red { color:rgb(227, 32, 32); }
+.green { color:rgb(24, 222, 58); }
+.commands:before {
+	border-right: 118px solid rgba(181,218,255,.7);
+	border-bottom: 78px solid transparent;
+	content: '';
+	height: 0;
+	left: -118px;
+	position: absolute;
+	top: 0;
+	width: 0;
+}
+.commands:after {
+	border-left:118px solid rgba(181,218,255,.7);
+	border-bottom:78px solid transparent;	
+	content: '';
+	height: 0;
+	right: -118px;
+	position: absolute;
+	top: 0;
+	width: 0;
+}
+.artillery {
+	width:200px;
+	height:100%;
+	right:0;
+	z-index:1;
+	background:rgba(181,218,255,.7);
+	-webkit-transform-origin:right center;
+	transform-origin:right center;
+	-webkit-transform:perspective(500px) rotateY(-10deg) skewY(4deg);
+	transform:perspective(500px) rotateY(-10deg) skewY(4deg);
+	border-bottom:2px solid rgb(181,218,255);
+}
+.artilleryContain {
+	-webkit-transform-origin:right center;
+	transform-origin:right center;
+	-webkit-transform:perspective(500px) skewY(-4deg);
+	transform:perspective(500px) skewY(-4deg);
+}
+.artillery:before {
+	border-bottom: 74px transparent solid;
+	border-right: 70px rgba(181,218,255,.7) solid;
+	border-top: 46px transparent solid;
+	content: '';
+	height: 0;
+	left: -70px;
+	position: absolute;
+  	top: 0;
+  	width: 0;
+}
+
+.HUVmid {
+	width:500px;
+	height:500px;
+	top:50%;
+	left:50%;
+	-webkit-transform:translate(-50%, -50%);
+	transform:translate(-50%, -50%);
+}
+.aimCircle:before {
+	height:55px;
+	width:33px;
+	content:'^';
+	color:white;
+	font-size:50px;
+	position:absolute;
+	left:50%;
+	top:50%;
+	-webkit-transform:translate(-50%, -50%);
+	transform:translate(-50%, -50%);
+}
+.aimCircle {
+	width:500px;
+	height:500px;
+	border:4px solid #A8E4FF;
+	border-radius:50%;
+}
+
+.HUVbottom {
+	bottom:0;
+	width:100%;
+	height:120px;
+}
+.radar {
+	height:200px;
+	width:200px;
+	margin-top:-100px;
+	margin-left:20px;
+	border-radius:50%;
+	background:rgba(181,218,255,.4);
+	border:2px solid rgb(181,218,255);
+	overflow:hidden;
+}
+.radar:before { 
+	content:'';
+	width:60%;
+	height:60%;
+	border-radius:0;
+	position:absolute;
+	bottom:40%;
+	left:50%;
+	-webkit-transform-origin:bottom left;
+	transform-origin:bottom left;
+	-webkit-transform:rotate(-45deg);
+	transform:rotate(-45deg);
+	background:rgba(181,218,255,.7);
+}
+.rship {
+	height:10px;
+	width:4px;
+	position:absolute;
+}
+.good { background:yellow; }
+.bad { background:red; }
+
+/* FOR TESTING PURPOSES */
+.rship:nth-of-type(1) {
+	left:45%; top:20%;
+	-webkit-transform:rotate(15deg);
+}
+.rship:nth-of-type(2) {
+	left:65%; top:15%;
+	-webkit-transform:rotate(-25deg);
+}
+
+.innerCircle {
+	width:30%;
+	height:30%;
+	border-radius:50%;
+	position:absolute;
+	top:50%;
+	left:50%;
+	background:rgba(205,220,235,1);;
+	-webkit-transform:translate(-50%, -50%);
+	transform:translate(-50%, -50%);
+}
+.innerCircle:before {
+	height: 24px;
+	width: 13px;
+	content: '^';
+	color: white;
+	font-size: 20px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+.targetDistance {
+	width:calc(100% - 500px);
+	height:100%;
+	left:50%;
+	bottom:0;
+	text-align:center;
+	height:65%;
+	-webkit-transform:translateX(-50%);
+	transform:translateX(-50%);
+	background:rgba(181,218,255,.7);
+	border-top:2px solid rgb(181,218,255);
+}
+
+.shipStats {
+	width:200px;
+	height:100%;
+	right:0;
+	background:rgba(181,218,255,.7);
+	border-top:2px solid rgb(181,218,255);
+}
+.shipDia {
+	-webkit-transform:rotate(180deg) translate(-10px, -3px);
+}
+.shipStats .left:nth-of-type(1) { width:70%; }
+.fuel { -webkit-padding-start:0; -webkit-margin-before:0; -webkit-margin-after:0; }
+.fuel li {
+	width:50px;
+	height:15px;
+	background:rgb(28,255,66);	
+	margin-top:2px;
+	list-style:none;
+}
