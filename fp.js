@@ -20,7 +20,7 @@ if (isMobile && isAndroid && !isChrome) {
 }
 
 /*******************
-    Dot Creation
+    Star Creation
 *******************/
 
 /* Differentiate dot counts based on roughly-guestimated device and browser capabilities. */
@@ -42,70 +42,63 @@ var $container = $("#stars"),
     $HUV = $(".HUV");
 
 var windowWidth = window.innerWidth,
+    windowHeight = window.innerHeight,
+    pageMidX = windowWidth/2,
+    pageMidY = windowHeight/2;
+
+$(window).resize(function() {
+    windowWidth = window.innerWidth,
     windowHeight = window.innerHeight;
+}) 
 
-var translateZMin = -100,
-    translateZMax = 00;
+var $spaceShip = $("#tridiv").find(".scene");
 
-/*$container.css("perspective-origin", windowWidth / 2 + "px " + (windowHeight / 2) + "px")
-    .velocity({
-    perspective: [1000, 1000],
-    opacity: [0.85, 0.55]
+// Move the enemy space ship around
+$spaceShip.css({
+    transform:"translateX("+3*windowWidth/4+"px) scale(.2)"
+}).velocity({ // First showing
+    translateX: ["-"+3*windowWidth/4+"px", 3*windowWidth/4+"px"],
+    translateY: ["0px", "-250px"],
+    rotateX: ["720deg", "0deg"],
+    rotateY: ["-90deg", "-90deg"],
+    scaleX: [0.2,0.2],
+    scaleY: [0.2,0.2],
+    scaleZ: [0.2,0.2]
 }, {
-    duration: 800,
-    loop: 1,
-    delay: 3250
-})*/;
-
-/* Special enhancements for WebKit browsers, which are faster at image resizing and box-shadow manipulation. */
-if (isWebkit) {
-    $stars.css("boxShadow", "0px 0px 4px 0px #ffff");
-}
-
-$stars.each(function() { 
-    var size = r(4, 15);
-    $(this).css({
-        transform:"translate3d("+r(0, windowWidth)+"px,"+r(0, windowHeight)+"px,"+r(translateZMin, translateZMax)+"px)",
-        height:size,
-        width:size
-    })
-}).delay(20000)/*
-    .velocity({
-
-    translateX: [
-    function () {
-        return "+=" + r(-windowWidth, windowWidth)
-    },
-    function () {
-        return r(0, windowWidth)
-    }],
-
-    translateY: [
-    function () {
-        return "+=" + r(-windowHeight, windowHeight)
-    },
-    function () {
-        return r(0, windowHeight)
-    }],
-
-    translateZ: [
-    function () {
-        return "+=" + r(translateZMin, translateZMax)
-    },
-    function () {
-        return r(translateZMin, translateZMax)
-    }]
-}, {
-    duration: 7000
-})*/
-    .velocity("reverse", {
-    easing: "easeOutQuad"
+    duration:2500,
+    delay:3000
 })
-    .velocity({
-    opacity: 0
+.velocity({ // Second showing - first half
+    translateX: ["-5%", "-"+windowWidth+"px"],
+    translateY: ["-10%", "-20%"],
+    rotateX: ["-40deg", "-20deg"],
+    rotateY: ["210deg", "140deg"],
+    rotateZ: ["25deg", "-35deg"],
+    scaleX: [0.3,0.8],
+    scaleY: [0.3,0.8],
+    scaleZ: [0.3,0.8]
 }, {
-    duration: 2000,
+    duration:1200,
+    delay:2000
+})
+.velocity({ // Second showing - second half
+    translateX: "-25%",
+    translateY: "-"+windowHeight+"px",
+    rotateX: "-40deg",
+    rotateY: "200deg",
+    rotateZ: "-20deg",
+    scaleX: 0.1,
+    scaleY: 0.1,
+    scaleZ: 0.1
+})
+.velocity({
+    // Wait for delay to finish
+    opacity: 1
+}, {
+    duration: 5000,
+    // Hide HUV and show the end text
     complete: function () {
+        toggleHUV();
         $HUV.velocity({
             opacity:0
         }, {
@@ -120,8 +113,76 @@ $stars.each(function() {
         });
     }
 })
-    .appendTo($container);
 
+// "Move the camera" left
+setTimeout(function() {
+    pageMidX = pageMidX + windowWidth/4;
+
+    $container.velocity({
+        backgroundPosition: [windowWidth/4,1]
+    }, {
+        duration:1000,
+        queue:false,
+        complete:function() {
+            pageMidX = pageMidX - windowWidth/4;
+            $container.velocity("reverse", { queue:false });
+        }
+    })
+}, 4000)
+
+/* Special enhancements for WebKit browsers, which are faster at image resizing and box-shadow manipulation. */
+if (isWebkit) {
+    $stars.css("boxShadow", "0px 0px 4px 0px #ffff");
+}
+
+// Make and animate the stars
+$stars.each(function() {
+    var size = r(4, 10),
+        myX = r(0, 2*windowWidth) - (pageMidX),
+        myY = r(0, 2*windowHeight) - (pageMidY),
+        thisStar = $(this);
+    thisStar.css({width:size,height:size});
+
+    (function run(x, y) {
+        var newX = (x-pageMidX) * 10,
+            newY = (y-pageMidY) * 10;
+        // Make sure it goes off screen
+        if(newX < windowWidth && newY < windowHeight && (newX > 0 && newY > 0)) {
+            newX = 2*newX;
+            newY = 2*newY;
+        }  
+        thisStar.velocity({
+            opacity:1
+        }, {
+            duration:500,
+            queue: false
+        })
+        .velocity({
+            translateX: [newX,x],
+            translateY: [newY,y]
+        }, {
+            duration: r(1000,3000),
+            queue:false,
+            complete: function () {
+                var x = pageMidX - (Math.random() > 0.5 ? Math.random() * pageMidX : -Math.random() * pageMidX),
+                    y = pageMidY - (Math.random() > 0.5 ? Math.random() * pageMidY : -Math.random() * pageMidY)
+                
+                thisStar.velocity({
+                    opacity:0
+                }, {
+                    duration:500,
+                    queue:false
+                }).css({
+                    transform: "translate("+x+"px,"+y+"px)"
+                });
+                run(x, y);
+            }
+        });
+    }())
+})
+.appendTo($container);
+
+// Fade out start description
 $description.velocity({
     opacity: [0, 0.65]
 }, {
@@ -130,8 +191,66 @@ $description.velocity({
     duration: 1100
 });
 
-$HUV.velocity({
-    opacity:[1, 0]
-}, {
-    duration:700
-})
+var $teamStats = $HUV.find('.teamStats'),
+    $commands = $HUV.find('.commands'),
+    $artillery = $HUV.find('.artillery'),
+    $HUVmid = $HUV.find('.HUVmid'),
+    $radar = $HUV.find('.radar'),
+    $targetDistance = $HUV.find('.targetDistance'),
+    $shipStats = $HUV.find('.shipStats'),
+    moveIn = true,
+    HUVduration = 750;
+
+function toggleHUV() {
+    if(moveIn) {        
+        $teamStats.velocity({
+            translateX: [0,"-130%"]
+        }, {
+            duration:HUVduration
+        })
+        $commands.velocity({
+            translateY: [0,"-100%"],
+            translateX: ["-50%","-50%"]
+        }, {
+            duration:HUVduration
+        })
+        $artillery.velocity({
+            translateX: [0,"130%"]
+        }, {
+            duration:HUVduration
+        })
+        $HUVmid.velocity({
+            opacity: [1,0]
+        }, {
+            duration:HUVduration * 2
+        })
+        $radar.velocity({
+            opacity: [1,0]
+        }, {
+            duration:HUVduration * 2
+        })
+        $targetDistance.velocity({
+            translateY: [0,"100%"],
+            translateX: ["-50%","-50%"]
+        }, {
+            duration:HUVduration
+        })
+        $shipStats.velocity({
+            translateX: [0,"130%"]
+        }, {
+            duration:HUVduration
+        })
+        moveIn = false;
+    } else {
+        $teamStats.velocity("reverse");
+        $commands.velocity("reverse");
+        $artillery.velocity("reverse");
+        $HUVmid.velocity("reverse");
+        $radar.velocity("reverse");
+        $targetDistance.velocity("reverse");
+        $shipStats.velocity("reverse");
+        moveIn = true;
+    }
+}
+
+toggleHUV();

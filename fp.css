@@ -13,7 +13,6 @@ a {
 	color: #4bc2f1;
 	text-decoration: none;
 }
-
 a:hover {
 	text-decoration: underline;
 }
@@ -35,16 +34,18 @@ a:hover {
 	word-spacing: -0.075rem;
 }
 #stars {
-	perspective: 50px;
-	-webkit-perspective: 50px;
-	-moz-perspective: 50px;
-	-ms-perspective: 50px;
+	perspective: 1000px;
+	-webkit-perspective: 1000px;
+	-moz-perspective: 1000px;
+	-ms-perspective: 1000px;
 
 	transform-origin: 50% 100%;
 	-webkit-transform-origin: 50% 100%;
 	-moz-transform-origin: 50% 100%;
 	-ms-transform-origin: 50% 100%;
 
+	background:url(stars.jpg);
+	background-position:1px;
 	position:absolute;
 	top:0;
 	left:0;
@@ -63,6 +64,17 @@ a:hover {
 	background-color: #ffffff;
 }
 .left { float:left; }
+.commands:before, .commands:after,
+.teamStats:before, .artillery:before,
+.aimCircle:before, .innerCircle:before,
+.radar:before, .targetDistance:before,
+.targetDistance:after, .shipStats:before {
+	content: '';
+	height: 0;
+	width: 0;
+	position: absolute;
+	top:0;
+}
 
 .HUV {
 	width:100%;
@@ -97,21 +109,14 @@ a:hover {
 .teamStats:before {
 	border-bottom: 74px transparent solid;
 	border-left: 70px rgba(181,218,255,.7) solid;
-	border-top: 46px transparent solid;
-	content: '';
-	height: 0;
-	right: -70px;
-	position: absolute;
-	top: 0;
-	width: 0;
+	border-top: 46px transparent solid;	
+	right: -70px;	
 }
 .commands {
 	width:calc(100% - 550px);
 	height:65%;
 	left:50%;
 	text-align:center;
-	-webkit-transform:translateX(-50%);
-	transform:translateX(-50%);
 	background:rgba(181,218,255,.7);
 	border-bottom:2px solid rgb(181,218,255);
 }
@@ -126,22 +131,12 @@ a:hover {
 .commands:before {
 	border-right: 118px solid rgba(181,218,255,.7);
 	border-bottom: 78px solid transparent;
-	content: '';
-	height: 0;
 	left: -118px;
-	position: absolute;
-	top: 0;
-	width: 0;
 }
 .commands:after {
 	border-left:118px solid rgba(181,218,255,.7);
 	border-bottom:78px solid transparent;	
-	content: '';
-	height: 0;
 	right: -118px;
-	position: absolute;
-	top: 0;
-	width: 0;
 }
 .artillery {
 	width:200px;
@@ -165,12 +160,7 @@ a:hover {
 	border-bottom: 74px transparent solid;
 	border-right: 70px rgba(181,218,255,.7) solid;
 	border-top: 46px transparent solid;
-	content: '';
-	height: 0;
 	left: -70px;
-	position: absolute;
-  	top: 0;
-  	width: 0;
 }
 
 .HUVmid {
@@ -187,7 +177,6 @@ a:hover {
 	content:'^';
 	color:white;
 	font-size:50px;
-	position:absolute;
 	left:50%;
 	top:50%;
 	-webkit-transform:translate(-50%, -50%);
@@ -220,7 +209,6 @@ a:hover {
 	width:60%;
 	height:60%;
 	border-radius:0;
-	position:absolute;
 	bottom:40%;
 	left:50%;
 	-webkit-transform-origin:bottom left;
@@ -254,7 +242,7 @@ a:hover {
 	position:absolute;
 	top:50%;
 	left:50%;
-	background:rgba(205,220,235,1);;
+	background:rgba(205,220,235,1);
 	-webkit-transform:translate(-50%, -50%);
 	transform:translate(-50%, -50%);
 }
@@ -264,7 +252,6 @@ a:hover {
 	content: '^';
 	color: white;
 	font-size: 20px;
-	position: absolute;
 	left: 50%;
 	top: 50%;
 	-webkit-transform: translate(-50%, -50%);
@@ -276,14 +263,22 @@ a:hover {
 	height:100%;
 	left:50%;
 	bottom:0;
+
 	text-align:center;
 	height:65%;
-	-webkit-transform:translateX(-50%);
-	transform:translateX(-50%);
 	background:rgba(181,218,255,.7);
 	border-top:2px solid rgb(181,218,255);
 }
-
+.targetDistance:before {
+	border-right: 118px solid rgba(181,218,255,.7);
+	border-top: 78px solid transparent;
+	left: -118px;
+}
+.targetDistance:after {
+	border-left:118px solid rgba(181,218,255,.7);
+	border-top:78px solid transparent;	
+	right: -118px;
+}
 .shipStats {
 	width:200px;
 	height:100%;
@@ -291,8 +286,15 @@ a:hover {
 	background:rgba(181,218,255,.7);
 	border-top:2px solid rgb(181,218,255);
 }
+.shipStats:before {
+	border-top: 74px transparent solid;
+	border-right: 70px rgba(181,218,255,.7) solid;
+	border-bottom: 46px transparent solid;
+	left: -70px;
+}
 .shipDia {
 	-webkit-transform:rotate(180deg) translate(-10px, -3px);
+	transform:rotate(180deg) translate(-10px, -3px);
 }
 .shipStats .left:nth-of-type(1) { width:70%; }
 .fuel { -webkit-padding-start:0; -webkit-margin-before:0; -webkit-margin-after:0; }
