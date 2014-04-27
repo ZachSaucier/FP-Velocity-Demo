@@ -1,29 +1,20 @@
 html, body { height:100%; margin:0; padding:0; }
-body {
-	background-color:rgb(5, 10, 11);
-	overflow: hidden;
-}
+body { background-color:rgb(5, 10, 11);	overflow: hidden; }
 * { 
 	font-family:"Orbitron"; 
 	-webkit-box-sizing:border-box; 
-	-moz-box-sizing:border-box; 
+	-moz-box-sizing:border-box;
 	box-sizing:border-box;
 }
-a {
-	color: #4bc2f1;
-	text-decoration: none;
-}
-a:hover {
-	text-decoration: underline;
-}
+a { color: #4bc2f1; text-decoration: none; }
+a:hover { text-decoration: underline; }
 #description {
 	position: fixed;
 	width: 22rem;
 	left: 50%;
-	top: 45%;
+	top: 35%;
 	margin-top: -1rem;
-	margin-left: -11rem;
-			
+	margin-left: -11rem;			
 	font-weight: 200;
 	color: #fff;
 	opacity: 0.65;
@@ -33,17 +24,11 @@ a:hover {
 	letter-spacing: 0.135em;
 	word-spacing: -0.075rem;
 }
-#stars {
-	perspective: 1000px;
+#stars {	
 	-webkit-perspective: 1000px;
-	-moz-perspective: 1000px;
-	-ms-perspective: 1000px;
-
-	transform-origin: 50% 100%;
-	-webkit-transform-origin: 50% 100%;
-	-moz-transform-origin: 50% 100%;
-	-ms-transform-origin: 50% 100%;
-
+	perspective: 1000px;
+	-webkit-transform-origin: 50% 100%;	
+	transform-origin: 50% 100%;	
 	background:url(stars.jpg);
 	background-position:1px;
 	position:absolute;
@@ -59,10 +44,10 @@ a:hover {
 	width: 15px;
 	height: 15px;
 	opacity:1;
-
 	border-radius: 15px;
 	background-color: #ffffff;
 }
+.scene { opacity:0; }
 .left { float:left; }
 .commands:before, .commands:after,
 .teamStats:before, .artillery:before,
@@ -82,7 +67,6 @@ a:hover {
 }
 .HUV > div { position:fixed; }
 .HUVtop > div, .HUVbottom > div  { position:absolute; padding:15px; }
-
 .HUVtop {
 	top:0;
 	width:100%;
@@ -94,13 +78,15 @@ a:hover {
 	height:100%;
 	background:rgba(181,218,255,.7);
 	border-bottom:2px solid rgb(181,218,255);
+	-webkit-transform:translateX(-130%);
+	transform:translateX(-130%);
 }
 #enemies { font-size:45px; width:50px; }
 .teamStats:before {
 	border-bottom: 74px transparent solid;
 	border-left: 70px rgba(181,218,255,.7) solid;
 	border-top: 46px transparent solid;	
-	right: -70px;	
+	right: -70px;
 }
 .commands {
 	width:calc(100% - 580px);
@@ -109,12 +95,15 @@ a:hover {
 	text-align:center;
 	background:rgba(181,218,255,.7);
 	border-bottom:2px solid rgb(181,218,255);
+	-webkit-transform:translateX(-50%), translateY(-100%);
+	transform:translateX(-50%), translateY(-100%);
 }
 .commandsContain {
 	width:100%;
-	height:40px;
+	height:60px;
+	line-height:30px;
 	max-width:800px;
-	padding-top:40px;
+	padding-top:60px;
 	margin:0 auto;
 	overflow:hidden;
 }
@@ -137,6 +126,8 @@ a:hover {
 	z-index:1;
 	background:rgba(181,218,255,.7);
 	border-bottom:2px solid rgb(181,218,255);
+	-webkit-transform:translateX(130%);
+	transform:translateX(130%);
 }
 .artillery ul { margin-top:10px; margin-left:-40px; }
 .artillery li {
@@ -159,6 +150,7 @@ a:hover {
 	height:500px;
 	top:50%;
 	left:50%;
+	opacity:0;
 	-webkit-transform:translate(-50%, -50%);
 	transform:translate(-50%, -50%);
 }
@@ -191,6 +183,7 @@ a:hover {
 	margin-top:-100px;
 	margin-left:20px;
 	border-radius:50%;
+	opacity:0;
 	background:rgba(181,218,255,.4);
 	border:2px solid rgb(181,218,255);
 	overflow:hidden;
@@ -214,7 +207,6 @@ a:hover {
 }
 .good { background:yellow; }
 .bad { background:red; }
-
 .innerCircle {
 	width:30%;
 	height:30%;
@@ -237,7 +229,6 @@ a:hover {
 	-webkit-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
 }
-
 .targetDistance {
 	width:calc(100% - 500px);
 	height:100%;
@@ -248,6 +239,8 @@ a:hover {
 	height:65%;
 	background:rgba(181,218,255,.7);
 	border-top:2px solid rgb(181,218,255);
+	-webkit-transform:translateX(-50%), translateY(100%);
+	transform:translateX(-50%), translateY(100%);
 }
 .targetDistance:before {
 	border-right: 118px solid rgba(181,218,255,.7);
@@ -265,6 +258,8 @@ a:hover {
 	right:0;
 	background:rgba(181,218,255,.7);
 	border-top:2px solid rgb(181,218,255);
+	-webkit-transform:translateX(130%);
+	transform:translateX(130%);
 }
 .shipStats:before {
 	border-top: 74px transparent solid;
@@ -285,3 +280,6 @@ a:hover {
 	margin-top:2px;
 	list-style:none;
 }
+@media (max-width:875px) { .commands { display:none; } }
+@media (max-width:615px) { .targetDistance { display:none; } }
+@media (max-width:540px) { .HUV { display:none; } }
