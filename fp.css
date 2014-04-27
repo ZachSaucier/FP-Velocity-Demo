@@ -93,19 +93,9 @@ a:hover {
 	width:200px;
 	height:100%;
 	background:rgba(181,218,255,.7);
-	-webkit-transform-origin:left center;
-	transform-origin:left center;
-	-webkit-transform:perspective(500px) rotateY(10deg) skewY(-4deg);
-	transform:perspective(500px) rotateY(10deg) skewY(-4deg);
 	border-bottom:2px solid rgb(181,218,255);
 }
-.statsContain {
-	-webkit-transform-origin:left center;
-	transform-origin:left center;
-	-webkit-transform:perspective(500px) skewY(4deg);
-	transform:perspective(500px) skewY(4deg);
-}
-#enemies { font-size:45px; }
+#enemies { font-size:45px; width:50px; }
 .teamStats:before {
 	border-bottom: 74px transparent solid;
 	border-left: 70px rgba(181,218,255,.7) solid;
@@ -113,7 +103,7 @@ a:hover {
 	right: -70px;	
 }
 .commands {
-	width:calc(100% - 550px);
+	width:calc(100% - 580px);
 	height:65%;
 	left:50%;
 	text-align:center;
@@ -122,9 +112,11 @@ a:hover {
 }
 .commandsContain {
 	width:100%;
-	height:100%;
+	height:40px;
 	max-width:800px;
+	padding-top:40px;
 	margin:0 auto;
+	overflow:hidden;
 }
 .red { color:rgb(227, 32, 32); }
 .green { color:rgb(24, 222, 58); }
@@ -144,17 +136,16 @@ a:hover {
 	right:0;
 	z-index:1;
 	background:rgba(181,218,255,.7);
-	-webkit-transform-origin:right center;
-	transform-origin:right center;
-	-webkit-transform:perspective(500px) rotateY(-10deg) skewY(4deg);
-	transform:perspective(500px) rotateY(-10deg) skewY(4deg);
 	border-bottom:2px solid rgb(181,218,255);
 }
-.artilleryContain {
-	-webkit-transform-origin:right center;
-	transform-origin:right center;
-	-webkit-transform:perspective(500px) skewY(-4deg);
-	transform:perspective(500px) skewY(-4deg);
+.artillery ul { margin-top:10px; margin-left:-40px; }
+.artillery li {
+	display: inline-block;
+	list-style-type: none;
+	width: 15px;
+	height: 55px;
+	background-image: url(bullet_full.gif);
+	background-size: cover;
 }
 .artillery:before {
 	border-bottom: 74px transparent solid;
@@ -220,20 +211,9 @@ a:hover {
 .rship {
 	height:10px;
 	width:4px;
-	position:absolute;
 }
 .good { background:yellow; }
 .bad { background:red; }
-
-/* FOR TESTING PURPOSES */
-.rship:nth-of-type(1) {
-	left:45%; top:20%;
-	-webkit-transform:rotate(15deg);
-}
-.rship:nth-of-type(2) {
-	left:65%; top:15%;
-	-webkit-transform:rotate(-25deg);
-}
 
 .innerCircle {
 	width:30%;

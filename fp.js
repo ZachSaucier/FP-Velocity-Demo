@@ -69,7 +69,7 @@ $spaceShip.css({
     delay:3000
 })
 .velocity({ // Second showing - first half
-    translateX: ["-5%", "-"+windowWidth+"px"],
+    translateX: ["-5%", "-"+5*windowWidth/4+"px"],
     translateY: ["-10%", "-20%"],
     rotateX: ["-40deg", "-20deg"],
     rotateY: ["210deg", "140deg"],
@@ -90,6 +90,16 @@ $spaceShip.css({
     scaleX: 0.1,
     scaleY: 0.1,
     scaleZ: 0.1
+}, {
+    duration:1500,
+    complete: function() {
+        $(".commandsContain").velocity({
+             paddingTop: "0px"
+        }, {
+            duration: 500,
+            queue: false
+        })
+    }
 })
 .velocity({
     // Wait for delay to finish
@@ -117,6 +127,7 @@ $spaceShip.css({
 // "Move the camera" left
 setTimeout(function() {
     pageMidX = pageMidX + windowWidth/4;
+    $("#enemies").html(1);
 
     $container.velocity({
         backgroundPosition: [windowWidth/4,1]
@@ -125,6 +136,12 @@ setTimeout(function() {
         queue:false,
         complete:function() {
             pageMidX = pageMidX - windowWidth/4;
+            $(".commandsContain").velocity({
+                paddingTop: "20px"
+            }, {
+                duration: 500,
+                queue: false
+            })
             $container.velocity("reverse", { queue:false });
         }
     })
@@ -148,8 +165,8 @@ $stars.each(function() {
             newY = (y-pageMidY) * 10;
         // Make sure it goes off screen
         if(newX < windowWidth && newY < windowHeight && (newX > 0 && newY > 0)) {
-            newX = 2*newX;
-            newY = 2*newY;
+            newX = 3*newX;
+            newY = 3*newY;
         }  
         thisStar.velocity({
             opacity:1
@@ -198,44 +215,52 @@ var $teamStats = $HUV.find('.teamStats'),
     $radar = $HUV.find('.radar'),
     $targetDistance = $HUV.find('.targetDistance'),
     $shipStats = $HUV.find('.shipStats'),
+    $rShip = $(".rship.bad"),
     moveIn = true,
     HUVduration = 750;
 
 function toggleHUV() {
     if(moveIn) {        
-        $teamStats.velocity({
+        $teamStats.css("transform","translateX(-130%)")
+        .velocity({
             translateX: [0,"-130%"]
         }, {
             duration:HUVduration
         })
-        $commands.velocity({
+        $commands.css("transform","translateX(-50%), translateY(-100%)")
+        .velocity({
             translateY: [0,"-100%"],
             translateX: ["-50%","-50%"]
         }, {
             duration:HUVduration
         })
-        $artillery.velocity({
+        $artillery.css("transform","translateX(130%)")
+        .velocity({
             translateX: [0,"130%"]
         }, {
             duration:HUVduration
         })
-        $HUVmid.velocity({
+        $HUVmid.css("opacity","0")
+        .velocity({
             opacity: [1,0]
         }, {
             duration:HUVduration * 2
         })
-        $radar.velocity({
+        $radar.css("opacity", "0")
+        .velocity({
             opacity: [1,0]
         }, {
             duration:HUVduration * 2
         })
-        $targetDistance.velocity({
+        $targetDistance.css("transform","translateX(-50%), translateY(100%)")
+        .velocity({
             translateY: [0,"100%"],
             translateX: ["-50%","-50%"]
         }, {
             duration:HUVduration
         })
-        $shipStats.velocity({
+        $shipStats.css("transform","translateX(130%)")
+        .velocity({
             translateX: [0,"130%"]
         }, {
             duration:HUVduration
@@ -253,4 +278,38 @@ function toggleHUV() {
     }
 }
 
+setInterval(function() {
+    $("#speed").html(r(440, 470))
+},100)
+
+$rShip.css({
+    "transform":"translateX(165px) translateY(15px) rotate(90deg)"
+})
+setTimeout(function(){
+    $rShip.velocity({
+        translateX: ["-10px","165px"],
+        translateY: ["15px","15px"],
+        rotateZ: ["90deg","90deg"]
+    }, {
+        duration:1500
+    })
+}, 3200)
+
+setTimeout(function(){
+    $rShip.velocity({
+        translateX: ["50px","17px"],
+        translateY: ["10px","28px"],
+        rotateZ: ["-25deg","50deg"]
+    }, {
+        duration:1300
+    }).velocity({
+        translateX: "25px",
+        translateY: "-30px",
+        rotateZ: "-2deg"
+    }, {
+        duration:1200
+    })
+}, 7500)
+
 toggleHUV();
+
