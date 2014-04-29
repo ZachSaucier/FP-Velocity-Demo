@@ -1,10 +1,7 @@
 /***************
      Setup
 ***************/
-
-var isWebkit = /Webkit/i.test(navigator.userAgent),
-    isChrome = /Chrome/i.test(navigator.userAgent),
-    isMobile = !! ("ontouchstart" in window),
+var isMobile = !! ("ontouchstart" in window),
     isAndroid = /Android/i.test(navigator.userAgent);
 
 $.fn.velocity.defaults.easing = "easeInOutSine";
@@ -14,7 +11,7 @@ function r(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-/* Differentiate dot counts based on roughly-guestimated device capabilities. */
+/* Differentiate start counts based on roughly-guestimated device capabilities. */
 var starsCount = isMobile ? (isAndroid ? 40 : 70) : 225,
     starsHTML = "",
     $stars;
@@ -34,6 +31,7 @@ var $container = $("#stars"),
 
 var windowWidth = window.innerWidth,
     windowHeight = window.innerHeight,
+    $rShip = $(".rship.bad"),
     pageMidX = windowWidth/2,
     pageMidY = windowHeight/2;
 
@@ -45,7 +43,7 @@ var $spaceShip = $("#tridiv").find(".scene");
 
 // Move the enemy space ship around
 $spaceShip.css({
-    transform:"translateX("+3*windowWidth/4+"px) scale(.2)",
+    transform:"translateX("+[3*windowWidth/4]+"px) scale(.2)",
     opacity:"1"
 }).delay(3000)
 .queue(function() {
@@ -84,7 +82,7 @@ $spaceShip.css({
     $spaceShip.dequeue();
 })
 .velocity({ // First showing
-    translateX: ["-"+3*windowWidth/4+"px", 3*windowWidth/4+"px"],
+    translateX: ["-"+[3*windowWidth/4]+"px", [3*windowWidth/4]+"px"],
     translateY: ["0px", "-250px"],
     rotateX: ["720deg", "0deg"],
     rotateY: ["-90deg", "-90deg"],
@@ -107,7 +105,7 @@ $spaceShip.css({
     $spaceShip.dequeue();
 })
 .velocity({ // Second showing - first half
-    translateX: ["-5%", "-"+5*windowWidth/4+"px"],
+    translateX: ["-5%", "-"+[5*windowWidth/4]+"px"],
     translateY: ["-10%", "-20%"],
     rotateX: ["-40deg", "-20deg"],
     rotateY: ["210deg", "140deg"],
@@ -161,7 +159,10 @@ $spaceShip.css({
         }, {
             duration:1500
         })
-        $description.html("<a href='http://zachsaucier.com/'>Created by Zach Saucier.</a><br /><br />The limit of what we can do is what we imagine.<br />Sincerely, <a href='https://twitter.com/ZachSaucier'>@ZachSaucier</a>")
+        $description.html("<a href='http://zachsaucier.com/'>Created by Zach Saucier.</a><br /><br />"
+                        +"The limit of what we can do is what we imagine.<br />Sincerely, "
+                        +"<a href='https://twitter.com/ZachSaucier'>@ZachSaucier</a></br></br>"
+                        +"View the source <a href='https://github.com/ZachSaucier/FP-Velocity-Demo'>on GitHub</a>")
             .velocity({
             opacity: 0.75
         }, {
@@ -174,47 +175,44 @@ $spaceShip.css({
 // Make and animate the stars
 $stars.each(function() {
     var size = r(4, 10),
-        myX = r(0, 2*windowWidth) - (pageMidX),
-        myY = r(0, 2*windowHeight) - (pageMidY),
-        thisStar = $(this);
-    thisStar.css({width:size,height:size});
-
-    (function run(x, y) {
-        var newX = (x-pageMidX) * 10,
-            newY = (y-pageMidY) * 10;
+        myX = pageMidX - (Math.random() > 0.5 ? Math.random() * pageMidX : -Math.random() * pageMidX),
+        myY = pageMidY - (Math.random() > 0.5 ? Math.random() * pageMidY : -Math.random() * pageMidY),
+        newX = (myX-pageMidX) * 10,
+        newY = (myY-pageMidY) * 10,
+        myDuration = r(1000,3000);
         // Make more go off screen
         if(newX < windowWidth && newY < windowHeight && (newX > 0 && newY > 0)) {
             newX = 2*newX;
             newY = 2*newY;
-        }  
-        thisStar.velocity({
+        }
+
+    $(this).css({width:size,height:size});
+    (function run(elem) {
+        $(elem).velocity({
             opacity:1
         }, {
             duration:500,
             queue: false
         })
         .velocity({
-            translateX: [newX,x],
-            translateY: [newY,y]
+            translateX: [newX,myX],
+            translateY: [newY,myY]
         }, {
-            duration: r(1000,3000),
+            duration: myDuration,
             queue:false,
-            complete: function () {
-                var x = pageMidX - (Math.random() > 0.5 ? Math.random() * pageMidX : -Math.random() * pageMidX),
-                    y = pageMidY - (Math.random() > 0.5 ? Math.random() * pageMidY : -Math.random() * pageMidY)
-                
-                thisStar.velocity({
+            complete: function () {               
+                $(elem).velocity({
                     opacity:0
                 }, {
                     duration:500,
                     queue:false
                 }).css({
-                    transform: "translate("+x+"px,"+y+"px)"
+                    transform: "translate("+myX+"px,"+myY+"px)"
                 });
-                run(x, y);
+                run(elem);
             }
-        });
-    }())
+        })
+    })(this)
 })
 .appendTo($container);
 
@@ -234,7 +232,6 @@ var $teamStats = $HUV.find('.teamStats'),
     $radar = $HUV.find('.radar'),
     $targetDistance = $HUV.find('.targetDistance'),
     $shipStats = $HUV.find('.shipStats'),
-    $rShip = $(".rship.bad"),
     moveIn = true,
     HUVduration = 750;
 
@@ -290,9 +287,12 @@ function toggleHUV() {
     }
 }
 
-setInterval(function() {
-    $("#speed").html(r(440, 470))
-},100)
+(function changeSpeed() {
+    setTimeout(function() { 
+        $("#speed").html(r(440, 470));
+        changeSpeed();
+    },100);        
+})();
 
 $rShip.css({"transform":"translateX(165px) translateY(15px) rotate(90deg)"})
 
